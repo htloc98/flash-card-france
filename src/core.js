@@ -9,6 +9,14 @@ const headerAliases = {
   language: ['ngôn ngữ', 'ngon ngu', 'language', 'lang'],
 }
 
+export function serializeCSV(rows) {
+  return '\uFEFF' + rows.map((row) => row.map((value) => {
+    const text = String(value ?? '')
+    const safe = /^[\s\uFEFF]*[=+@-]|^[\t\r\n]/u.test(text) ? `'${text}` : text
+    return `"${safe.replaceAll('"', '""')}"`
+  }).join(',')).join('\r\n')
+}
+
 export function parseCSV(text) {
   const source = text.replace(/^\uFEFF/, '')
   const firstLine = source.split(/\r?\n/, 1)[0] ?? ''

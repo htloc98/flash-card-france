@@ -4,3 +4,9 @@ dist
 .env.*
 !.env.example
 coverage
+.next/
+.vercel/
+.wrangler/
+*.tsbuildinfo
+artifacts/
+data/*.sql

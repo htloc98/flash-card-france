@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { zipSync } from 'fflate'
-import { entryErrors, findDuplicate, mergeImportUpdate, normalizeImportRow, parseCSV, suggestColumnMapping } from '../src/core.js'
+import { entryErrors, findDuplicate, mergeImportUpdate, normalizeImportRow, parseCSV, suggestColumnMapping, serializeCSV } from '../src/core.js'
 import { assertSafeZip } from '../src/xlsx.js'
 
 test('parses quoted CSV fields, embedded commas, newlines and escaped quotes', () => {
@@ -16,6 +16,13 @@ test('detects semicolon-separated CSV and ignores a UTF-8 BOM', () => {
     ['Mot', 'Sens'],
     ['été', 'été, saison chaude'],
   ])
+})
+
+test('CSV export neutralizes formula cells while preserving French text and quoting', () => {
+  const rows = [["S'appeler", 'été', 'hello, "world"'], ['=1+1', '+cmd', '-1', '@SUM(A1)', '\t=1+1', '  =1+1', '\rtext']]
+  const csv = serializeCSV(rows)
+  assert.ok(csv.startsWith('\uFEFF'))
+  assert.deepEqual(parseCSV(csv), [rows[0], rows[1].map((value) => `'${value}`)])
 })
 
 test('suggests known column names and normalizes optional values', () => {

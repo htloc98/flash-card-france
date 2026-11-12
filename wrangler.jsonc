@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "mot-flashcards",
+  "account_id": "7e8cff9cba5314fdc3dfc82565f267bb",
+  "compatibility_date": "2026-11-12",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mot-flashcards",
+      "database_id": "2882204c-9595-4957-bbe2-0b9c230a29cf",
+      "migrations_dir": "cloudflare/migrations"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+const nextConfig = {
+  reactStrictMode: true,
+  outputFileTracingIncludes: { '/*': ['./data/Mots_nouveaux_Lecon_1_v2.csv'] },
+  async headers() {
+    return [{ source: '/:path*', headers: [
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'X-Frame-Options', value: 'DENY' },
+    ] }]
+  },
+}
+
+export default nextConfig
